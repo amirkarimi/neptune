@@ -6,12 +6,12 @@ import scalacss.DevDefaults._
 object NeptuneStyles extends StyleSheet.Inline {
   import dsl._
 
-  val neptuneActionbarColor = grey(0xF)
+  val neptuneActionbarColor = grey(0xFF)
   val neptuneBorderColor = rgba(10, 10, 10, 0.1)
   val neptuneBorderRadius = 5 px
   val neptuneBorderStyle = solid
   val neptuneBorderWidth = 1 px
-  val neptuneBoxShadow = s"0, 2 px 3px $neptuneBorderColor, 0 0 0 1px $neptuneBorderColor !default"
+  val neptuneBoxShadow = s"0 2px 3px ${neptuneBorderColor.value}, 0 0 0 1px ${neptuneBorderColor.value}"
   val neptuneButtonHeight = 30 px
   val neptuneButtonWidth = 30 px
   val neptuneContentHeight = 300 px

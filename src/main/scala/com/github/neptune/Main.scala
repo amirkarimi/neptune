@@ -2,27 +2,29 @@ package com.github.neptune
 
 import org.scalajs.dom
 import dom.document
-import org.scalajs.dom.html.Html
+import org.scalajs.dom.html._
+import org.scalajs.dom.raw.MouseEvent
 import scala.scalajs.js.annotation.JSExportTopLevel
+import scalacss.ProdDefaults._
 
 case class Action(icon: String, title: String, command: () => Unit)
 
-object Action {
-  def apply(icon: String, title: String)(command: => Unit) = {
-    apply(icon, title, () => command)
+object Act {
+  def apply(icon: String, title: String)(command: => Unit): Action = {
+    Action.apply(icon, title, () => command)
   }
 }
 
 object Main {
 
   val actions = Seq(
-    Action("<b>B</b>", "Bold") {
+    Act("<b>B</b>", "Bold") {
       exec("bold")
     },
-    Action("<i>I</i>", "Italic") {
+    Act("<i>I</i>", "Italic") {
       exec("italic")
     },
-    Action("<u>U</u>", "Underline") {
+    Act("<u>U</u>", "Underline") {
       exec("underline")
     }
   )
@@ -38,21 +40,29 @@ object Main {
 
   @JSExportTopLevel("neptune")
   def neptune(element: dom.Element): Unit = {
+    element match {
+      case element: dom.html.Element => element.className = NeptuneStyles.neptune.htmlClass
+      case other => // Don't know how to settup className for non-html element
+    }
+
+    val actionbar = document.createElement("div").asInstanceOf[Div]
+    actionbar.className = NeptuneStyles.neptuneActionbar.htmlClass // TODO: settings.classes.actionbar
+    element.appendChild(actionbar)
+
     val content = document.createElement("div").asInstanceOf[Html]
     content.contentEditable = "true"
     content.className = NeptuneStyles.neptuneContent.htmlClass
     content.onkeydown = preventTab
     element.appendChild(content)
 
-
-    settings.actions.forEach(action => {
-      const button = document.createElement('button')
-      button.className = settings.classes.button
+    actions.foreach { action =>
+      val button = document.createElement("button").asInstanceOf[Button]
+      button.className = NeptuneStyles.neptuneButton.htmlClass // TODO: settings.classes.button
       button.innerHTML = action.icon
       button.title = action.title
-      button.onclick = action.result
+      button.onclick = { (e: MouseEvent) => action.command() }
       actionbar.appendChild(button)
-    })
+    }
   }
 
   val preventTab: (dom.KeyboardEvent => Any) = { e => 
@@ -60,6 +70,8 @@ object Main {
   }
 
   def main(args: Array[String]): Unit = {
+    NeptuneStyles.addToDocument()
+    // TODO
     neptune(document.getElementById("my-editor"))
   }
 }
