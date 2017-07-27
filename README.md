@@ -1,5 +1,7 @@
 ** This project is still under development but the editor is working **
 
+![Neptune](neptune.png)
+
 > Neptune is ScalaJS port of [pell](https://github.com/jaredreich/pell), the simplest and smallest WYSIWYG text editor for web, with no dependencies.
 
 Even the CSS is written in ScalaJS using [ScalaCSS](https://github.com/japgolly/scalacss)
