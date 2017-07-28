@@ -2,7 +2,7 @@
 
 ![Neptune](neptune.png)
 
-Even the CSS is written in ScalaJS using [ScalaCSS](https://github.com/japgolly/scalacss)
+It's pure Scala; even the CSS is written in Scala using [ScalaCSS](https://github.com/japgolly/scalacss)
 
 ![Neptune Demo](neptune_demo.gif)
 
